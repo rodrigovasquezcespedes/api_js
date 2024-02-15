@@ -37,6 +37,7 @@ const calcular = () => {
     total.innerHTML = 'Total $ ' + separarPorPuntos(resultado.toFixed(0));
 }
 
+
 const borrar=()=>{
     input.value = "";
     cargarOpcionesDesdeAPI();
