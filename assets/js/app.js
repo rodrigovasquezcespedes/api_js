@@ -12,11 +12,11 @@ const cargarOpcionesDesdeAPI = async () => {
         selector.innerHTML = "";
         selector.innerHTML = "<option value='0'>Seleccione una opción</option>";
         for (const indice in data) {
-            const indicator = data[indice];
-            if (indicator.nombre !== undefined) {
+            const indicador = data[indice];
+            if (indicador.nombre !== undefined) {
                 const optionElement = document.createElement("option");
-                optionElement.value = indicator.valor;
-                optionElement.textContent = indicator.nombre + "  ( valor " + indicator.valor + ") ";
+                optionElement.value = indicador.valor;
+                optionElement.textContent = indicador.nombre + "  ( valor " + indicador.valor + ") ";
                 selector.appendChild(optionElement);
             }
         }
@@ -46,4 +46,3 @@ const borrar=()=>{
 boton.addEventListener('click', calcular);
 input.addEventListener("focus",borrar);
 cargarOpcionesDesdeAPI();
-
