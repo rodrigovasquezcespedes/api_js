@@ -54,7 +54,7 @@ const calcular = async () => {
         const { value: monto } = input;
         const resultado = monto.replace(/\./g, '') / opciones.serie[0].valor;
         const tipo = selector.value;
-        total.innerHTML = `${tipo} $ ${resultado.toFixed(2)}`;
+        total.innerHTML = `Resultado $ ${resultado.toFixed(2)}`;
         inicializarGrafico();
         //destruye el grafico
         if (myChart) {
