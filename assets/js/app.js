@@ -35,7 +35,7 @@ const cargarselect = async () => {
 //formatea los valores del input
 const formatearValor = () => {
     if (!isNaN(input.value)) {
-        const valor = input.value;
+        const {value: valor}= input;
         const valorFormateado = valor.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         input.value = valorFormateado;
     } else {
@@ -65,6 +65,7 @@ const calcular = async () => {
         console.error('Error al calcular:', error);
     }
 };
+
 // obtiene los de los ultimos 10 dias 
 const obtenerDatosUltimos10Dias = async () => {
     try {
@@ -76,6 +77,7 @@ const obtenerDatosUltimos10Dias = async () => {
         return [];
     }
 };
+
 //crea el grafico con la informacion entregada de los ultimos 
 const inicializarGrafico = async () => {
     const indicador = selector.value;
@@ -97,6 +99,7 @@ const inicializarGrafico = async () => {
         }
     });
 };
+
 //limpia el input y el select
 const borrar = () => {
     input.value = "";
