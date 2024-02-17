@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./assets/css/style.css">
-<title>Tipo de cambio</title>
-</head>
-<body>
 
-<div class="container">
-    <h1>Conversor de Moneda Nacional</h1>
-    <div class="form-container">
-        <input id="input" type="text" name="texto" placeholder="Ingresar Valor">
-        <select id="selectOptions">
-        </select>
-        <button id="boton">Calcular</button>
-        <p id="resultado"></p>
-        <div class="grafica">
-            <canvas id="myChart"></canvas>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Tipo de cambio</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Conversor de Moneda Nacional</h1>
+        <div class="form-container">
+            <input id="input" type="text" name="texto" placeholder="Ingresar Valor">
+            <select id="selectOptions">
+            </select>
+            <button id="boton">Calcular</button>
+            <p id="resultado"></p>
+            <div class="grafica">
+                <canvas id="myChart"></canvas>
             </div>
-    </div>    
-    
-</div>
-<script src="./assets/js/app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./assets/js/app.js"></script>
+
 </body>
+
 </html>
