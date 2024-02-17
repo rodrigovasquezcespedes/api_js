@@ -17,7 +17,7 @@ const cargarOpcionesDesdeAPI = async () => {
     }
 };
 
-//carga el select con la informacion recuperada
+//carga el select con la informacion recuperada de la api
 const cargarselect = async () => {
     const datos = await cargarOpcionesDesdeAPI();
     selector.innerHTML = "<option value='0'>Seleccione una opción</option>";
@@ -32,6 +32,7 @@ const cargarselect = async () => {
     }
 }
 
+//formatea los valores del input
 const formatearValor = () => {
     if (!isNaN(input.value)) {
         const valor = input.value;
@@ -44,10 +45,11 @@ const formatearValor = () => {
     }
 }
 
+//calcula el valor del tipo de cambio
 const calcular = async () => {
     try {
 
-
+       if(input.value!==""){
         const opciones = await cargarOpcionesDesdeAPI();
         const { value: monto } = input;
         const resultado = monto.replace(/\./g, '') / opciones.serie[0].valor;
@@ -58,12 +60,12 @@ const calcular = async () => {
         if (myChart) {
             myChart.destroy();
         }
-
+    }
     } catch (error) {
         console.error('Error al calcular:', error);
     }
 };
-
+// obtiene los de los ultimos 10 dias 
 const obtenerDatosUltimos10Dias = async () => {
     try {
         const data = await cargarOpcionesDesdeAPI();
@@ -74,7 +76,7 @@ const obtenerDatosUltimos10Dias = async () => {
         return [];
     }
 };
-
+//crea el grafico con la informacion entregada de los ultimos 
 const inicializarGrafico = async () => {
     const indicador = selector.value;
     const datos = await obtenerDatosUltimos10Dias(indicador);
@@ -95,15 +97,16 @@ const inicializarGrafico = async () => {
         }
     });
 };
-
-const limpiar=()=>{
-    input.value="";
-    selector="<option value='0'>Seleccione una opción</option>";
+//limpia el input y el select
+const borrar = () => {
+    input.value = "";
+    cargarOpcionesDesdeAPI();
+    total.innerHTML = "";
 }
 
 boton.addEventListener('click', calcular);
 input.addEventListener("input", formatearValor);
-input.addEventListener("focus",limpiar)
+input.addEventListener("focus",borrar)
 cargarselect();
 
 
