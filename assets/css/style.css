@@ -14,7 +14,7 @@
     
     h1 {
         text-align: center;
-        color: #333;
+        color: #e4e2e2;
     }
         
     .form-container {
@@ -42,4 +42,12 @@
     
     .form-container button:hover {
         background-color: #45a049;
+    }
+    .grafica{
+        background-color: rgb(253, 253, 251);
+    }
+    #resultado{
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 1rem;
+        color: white;
     }

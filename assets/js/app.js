@@ -2,7 +2,7 @@ const selector = document.querySelector("#selectOptions");
 const boton = document.querySelector("#boton");
 const total = document.querySelector("#resultado");
 const input = document.querySelector("#input");
-const apiUrl=`https://mindicador.cl/api`;
+const apiUrl = `https://mindicador.cl/api`;
 
 // Función para recuperar datos de la API
 const cargarOpcionesDesdeAPI = async () => {
@@ -20,11 +20,10 @@ const cargarOpcionesDesdeAPI = async () => {
 //carga el select con la informacion recuperada
 const cargarselect = async () => {
     const datos = await cargarOpcionesDesdeAPI();
-    selector.innerHTML = "";
     selector.innerHTML = "<option value='0'>Seleccione una opción</option>";
     for (const indice in datos) {
         const indicador = datos[indice];
-        if (indicador.nombre !== undefined) {
+        if (indicador.nombre !== undefined){
             const optionElement = document.createElement("option");
             optionElement.value = indicador.codigo;
             optionElement.textContent = indicador.nombre + "  ( valor " + indicador.valor + ") ";
@@ -32,8 +31,6 @@ const cargarselect = async () => {
         }
     }
 }
-
-
 
 const formatearValor = () => {
     if (!isNaN(input.value)) {
@@ -49,55 +46,64 @@ const formatearValor = () => {
 
 const calcular = async () => {
     try {
-        const opciones = await cargarOpcionesDesdeAPI();      
+
+
+        const opciones = await cargarOpcionesDesdeAPI();
         const { value: monto } = input;
         const resultado = monto.replace(/\./g, '') / opciones.serie[0].valor;
         const tipo = selector.value;
         total.innerHTML = `${tipo} $ ${resultado.toFixed(2)}`;
         inicializarGrafico();
+        //destruye el grafico
+        if (myChart) {
+            myChart.destroy();
+        }
 
     } catch (error) {
         console.error('Error al calcular:', error);
     }
 };
 
-const obtenerDatosUltimos10Dias = async (indicador) => {
+const obtenerDatosUltimos10Dias = async () => {
     try {
-      const response = await fetch(`${apiUrl}/${indicador}`);
-      const data = await response.json(); // Parse JSON response
-      const ultimos10Dias = data.serie.slice(-10);
-      return ultimos10Dias;
+        const data = await cargarOpcionesDesdeAPI();
+        const ultimos10Dias = data.serie.slice(-10);
+        return ultimos10Dias;
     } catch (error) {
-      console.error('Error al obtener datos desde la API:', error);
-      return [];
+        console.error('Error al obtener datos desde la API:', error);
+        return [];
     }
-  };
+};
 
-  // Function to initialize the chart
-  const inicializarGrafico = async () => {
-    const indicador = selector.value; // Change this to the indicator you want to display
-    console.log(indicador);
+const inicializarGrafico = async () => {
+    const indicador = selector.value;
     const datos = await obtenerDatosUltimos10Dias(indicador);
     const fechas = datos.map(entry => entry.fecha);
     const valores = datos.map(entry => entry.valor);
     const ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: fechas,
-        datasets: [{
-          label: `Últimos 10 días de ${indicador.toUpperCase()}`,
-          data: valores,
-          fill: false,
-          borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
-        }]
-      }
+    myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: fechas,
+            datasets: [{
+                label: `Últimos 10 días de ${indicador.toUpperCase()}`,
+                data: valores,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        }
     });
-  };
+};
+
+const limpiar=()=>{
+    input.value="";
+    selector="<option value='0'>Seleccione una opción</option>";
+}
 
 boton.addEventListener('click', calcular);
-input.addEventListener("change", formatearValor);
+input.addEventListener("input", formatearValor);
+input.addEventListener("focus",limpiar)
 cargarselect();
 
 
